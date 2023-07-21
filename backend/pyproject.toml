@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "shopcartz-api"
+version = "0.1.0"
+description = ""
+authors = ["JD Solanki <jdsolanki0001@gmail.com>"]
+readme = "README.md"
+packages = [{include = "shopcartz_api"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = {extras = ["all"], version = "^0.100.0"}
+sqlalchemy = "^2.0.19"
+
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.4.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
