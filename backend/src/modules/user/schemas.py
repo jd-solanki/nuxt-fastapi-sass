@@ -10,8 +10,8 @@ class UserBase(BaseModel):
 
 
 class UserBasePartial(BaseModel):
-    username: str | None = Field(max_length=30)
-    email: EmailStr | None = Field(max_length=254)
+    username: str | None = Field(max_length=30, default=None)
+    email: EmailStr | None = Field(max_length=254, default=None)
 
 
 # 👉 CRUD models
