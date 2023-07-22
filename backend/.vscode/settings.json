@@ -1,9 +1,13 @@
 {
     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": true,
+            "source.fixAll": true
+        }
     },
-    "python.formatting.provider": "none",
+    "python.formatting.provider": "black",
     "cSpell.words": [
         "hashpw"
     ],

@@ -1,5 +1,3 @@
-from typing import TypeVar
-
 import bcrypt
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
