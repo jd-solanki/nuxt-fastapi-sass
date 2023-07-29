@@ -14,3 +14,10 @@ app = FastAPI()
 
 # Include user router
 app.include_router(user_router, prefix="/users", tags=["users"])
+
+
+@app.get("/")
+async def hello():
+    return {
+        "hello": "world",
+    }

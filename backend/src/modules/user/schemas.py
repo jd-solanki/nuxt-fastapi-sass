@@ -27,3 +27,11 @@ class UserRead(UserBase, EntityInsertMeta):
 
 class UserUpdate(UserBasePartial):
     password: str | None = None
+
+
+# 👉 Token
+
+
+class Token(BaseModel):
+    access_token: str
+    token_type: str

@@ -1,6 +1,12 @@
+from datetime import datetime, timedelta
+from typing import Any
+
 import bcrypt
 from fastapi import HTTPException, status
+from sqlalchemy import exc
 from sqlalchemy.orm import Session
+
+from src.modules.helpers import hash
 
 from . import models, schemas
 
@@ -33,6 +39,15 @@ def get_users(db: Session) -> list[models.User]:
 
 def get_user(db: Session, user_id: int) -> models.User | None:
     return db.query(models.User).get(user_id)
+
+
+def get_user_by_username(db: Session, username: str) -> models.User | None:
+    partial_query = db.query(models.User).where(models.User.username == username)
+    try:
+        return partial_query.one_or_none()
+    except exc.MultipleResultsFound:
+        print("Report admins about there is multiple records with same username")
+        return partial_query.first()
 
 
 def get_user_or_404(
@@ -69,3 +84,22 @@ def delete_user(db: Session, user_id: int):
 
     db.delete(db_user)
     db.commit()
+
+
+# 👉 Token
+def create_access_token(data: dict[Any, Any], expires_delta: timedelta | None = None):
+    # Copy passed data
+    to_encode = data.copy()
+
+    # Calculate expire time by adding expires_delta to current UTC time
+    # If expires_delta is provided use it or use 15 minutes as default for adding in current UTC time
+    if expires_delta:
+        expire = datetime.utcnow() + expires_delta
+    else:
+        expire = datetime.utcnow() + timedelta(minutes=15)
+
+    # add `exp` key to data dict that represents the expiration time of JWT
+    to_encode.update({"exp": expire})
+
+    # Return encoded JWT
+    return hash.encode_jwt(to_encode)
